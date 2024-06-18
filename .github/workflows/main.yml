@@ -1,0 +1,31 @@
+name: Run Cypress Tests
+
+# Uruchamiaj przy każdym pushu lub pull request do gałęzi 'main'
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest  # Typ maszyny do uruchomienia testów
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3  # Pobiera kod z repozytorium
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3  # Ustawia wersję Node.js
+        with:
+          node-version: '20.x'  # Użyj odpowiedniej wersji Node.js (np. 20.x)
+
+      - name: Install dependencies
+        run: npm ci  # Instalacja zależności projektu
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v5  # Uruchamia Cypress
+        with:
+          browser: chrome  # Przeglądarka do uruchomienia testów (np. chrome, firefox)
