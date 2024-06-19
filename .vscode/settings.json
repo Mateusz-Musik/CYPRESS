@@ -1,0 +1,9 @@
+{
+    "yaml.schemas": {
+        "https://www.artillery.io/schema.json": [
+            "file:///c%3A/Users/Admin/Desktop/GO%20IT/Kurs%20QAA/Materialy/QA%20Automation/Cypress/cypress/artillery/test_nowy.yml",
+            "file:///c%3A/Users/Admin/Desktop/GO%20IT/Kurs%20QAA/Materialy/QA%20Automation/Cypress/cypress/artillery/test.yml"
+        ]
+    },
+    "git.ignoreLimitWarning": true
+}
