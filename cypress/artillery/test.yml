@@ -1,0 +1,34 @@
+config:
+  target: "https://httpbin.org"
+  phases:
+    - duration: 20  # Czas trwania testu w sekundach (20 sekund)
+      arrivalRate: 10  # Liczba nowych użytkowników na sekundę
+      name: "Steady load phase"
+  payload:
+    -
+      path: "payload.csv"  # Ścieżka do pliku CSV z danymi
+      fields:
+      - "name"  # Nazwa pola z pliku CSV
+      - "email"  # Nazwa pola z pliku CSV
+      order: sequence
+      skipHeader: true
+  plugins:
+    ensure: {}
+  ensure: 
+    thresholds:  # Walidacja metryk końcowych
+      - http.response_time.p95: 1000
+      - http.response_time.p99: 1200
+    conditions:
+       - expression: vusers.failed == 0
+       - expression: "http.response_time.mean < 800 and http.responses > 100"
+
+scenarios:
+  - name: "GET and POST requests"
+    flow:
+      - get:
+          url: /get  # Żądanie GET do endpointu /get
+      - post:
+          url: /post  # Żądanie POST do endpointu /post
+          json:
+            name: "{{ name }}"  # Wartość pola 'name' z pliku CSV
+            email: "{{ email }}"  # Wartość pola 'email' z pliku CSV
